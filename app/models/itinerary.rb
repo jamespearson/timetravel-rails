@@ -10,6 +10,10 @@ class Itinerary < ApplicationRecord
 
     # TODO: Should require at least 1 destination
     
+    def end_at
+	self.destinations.maximum(:departure_time)
+    end
+
     private 
 
     # On initialization, sets a default start time
