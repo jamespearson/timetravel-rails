@@ -1,5 +1,7 @@
 class Itinerary < ApplicationRecord
     
+    has_many :destinations, :dependent => :destroy
+
     validates :agent_name, presence: true
 
     validates :start_at, presence: true
