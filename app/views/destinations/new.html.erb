@@ -1,0 +1,43 @@
+
+
+<h2>Itinary</h2>
+
+<%=form_for(@itinerary) do |f| %>
+    <%=render partial:"itineraries/itinerary", locals: {f: f} %>
+
+    <%=f.submit "Update" %>
+<% end %>
+
+<h3>Destinations</h3>
+
+<ul>
+    <%= render partial: "destination_list_item", collection: @destinations.slice(0 , @destinations.length - 1) %>
+</ul>
+
+<h3>Add Destination</h3>
+
+<%=form_for [@itinerary, @destination] do |f| %>
+    <div>
+        <%=f.label :address_line_1 %>
+        <%=f.text_field :address_line_1 %>
+    </div>
+        <div>
+        <%=f.label :address_line_2 %>
+        <%=f.text_field :address_line_2 %>
+    </div>
+        <div>
+        <%=f.label :city %>
+        <%=f.text_field :city %>
+    </div>
+        <div>
+        <%=f.label :post_code %>
+        <%=f.text_field :post_code %>
+    </div>
+
+            <div>
+        <%=f.label :duration_in_minutes %>
+        <%=f.text_field :duration_in_minutes %>
+    </div>
+
+    <%=f.submit %>
+<% end %>
