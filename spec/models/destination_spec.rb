@@ -46,4 +46,13 @@ RSpec.describe Destination, type: :model do
     should validate_numericality_of(:duration_in_minutes).is_greater_than_or_equal_to(0) 
   end
   
+
+  it "should not accept a location outside of London" do
+    itinerary = create(:itinerary)
+    destination = Destination.new(address_line_1: "Ings Mill Drive", city: "Huddersfield", post_code: "HD8 9PW", latitude: 53.594890, longitude: -1.614900, itinerary: itinerary)
+
+    expect(destination).to_not be_valid
+    expect(destination.errors[:post_code].length).to eql(1)
+  end
+
 end

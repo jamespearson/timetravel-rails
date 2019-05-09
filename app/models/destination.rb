@@ -31,12 +31,16 @@ class Destination < ApplicationRecord
 
   validates :post_code, presence: true
 
+  validate :validate_is_in_london?
+  
   # Geocode the address, unless the lat / lng has already changed
   before_validation :geocode, if:  Proc.new { has_address_changed? },
                               unless: Proc.new {  have_coordinates_changed? }
 
   # Reverse Geocode any coordinates that have been manually set                                          
   before_validation :reverse_geocode, if: Proc.new { have_coordinates_changed? }
+
+
 
   before_save :set_times
 
@@ -76,6 +80,13 @@ class Destination < ApplicationRecord
   end
 
   private
+
+  def validate_is_in_london?
+    return unless latitude.present? && longitude.present? 
+
+    distance_to_london = self.distance_to([51.507351, -0.127758])
+    errors.add(:post_code, "cannot be outside London") if distance_to_london > 25
+  end
 
   def has_address_changed?
     changes_to_save.include?("address_line_1") || 

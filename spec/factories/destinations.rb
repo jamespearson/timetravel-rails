@@ -5,8 +5,8 @@ FactoryBot.define do
     city { "London" }
     post_code { "SE14 5AA" }
     duration_in_minutes { 1 }
-    latitude { 1.5 }
-    longitude { 1.5 }
+    latitude { 51.5246515 }
+    longitude { -0.0852404 }
     sequence(:index) { |n| n }
   end
 end
