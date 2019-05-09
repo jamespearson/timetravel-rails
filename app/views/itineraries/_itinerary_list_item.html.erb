@@ -1,0 +1,8 @@
+<li>
+    <h3><%=itinerary_list_item.id%> - <%=itinerary_list_item.agent_name%></h3>
+    <p><%=itinerary_list_item.start_at%> to <%=itinerary_list_item.end_at%></p>
+    <p><%=itinerary_list_item.destinations.count%> destinations</p>
+
+    <%=link_to "Edit", new_itinerary_destination_path(itinerary_list_item) %>
+    <%=link_to "Delete", itinerary_path(itinerary_list_item), method: 'delete'  %> 
+</li>

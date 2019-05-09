@@ -1,0 +1,8 @@
+<h1>Create itineraries</h1>
+
+<%=form_for @itinerary do |f| %>
+
+    <%=render partial: "itinerary", locals: {f: f} %>
+
+    <%=f.submit %>
+<% end %>
