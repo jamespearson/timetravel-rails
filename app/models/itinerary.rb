@@ -24,11 +24,13 @@ class Itinerary < ApplicationRecord
     # On initialization, sets a default start time and place.
     def set_defaults
     
-        if self.destinations.empty?
-            self.destinations.new(latitude:  51.5246515, longitude: -0.0852404, index: 0, duration_in_minutes: 0 )
-        end
+        
      
         self.start_at ||= 1.hour.since
+
+        if self.destinations.empty?
+            self.destinations.new(latitude:  51.5246515, longitude: -0.0852404, index: 0, duration_in_minutes: 0, departure_time: self.start_at, arrival_time: self.start_at, travel_time_in_minutes: 0 )
+        end
     end
 
     # Validates that the start time is in the future
