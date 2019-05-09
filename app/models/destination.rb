@@ -5,7 +5,7 @@ class Destination < ApplicationRecord
   geocoded_by :address
   
   reverse_geocoded_by :latitude, :longitude do |obj,results|
-    if geo = results.first
+    if results.first.address.present? && geo = results.first
       obj.address_line_1, obj.address_line_2 = geo.address.split(",")
       obj.city    = geo.city
       obj.post_code = geo.postal_code
@@ -17,8 +17,7 @@ class Destination < ApplicationRecord
   validates :city, presence: true
 
   validates :duration_in_minutes, presence: true,
-                                  numericality: { greater_than_or_equal_to: 0},
-                                  uniqueness: {scope: :itinerary_id}
+                                  numericality: { greater_than_or_equal_to: 0}
 
   validates :index, presence: true,
                     numericality: { greater_than_or_equal_to: 0},
@@ -56,7 +55,7 @@ class Destination < ApplicationRecord
     if previous_destination = itinerary.destinations.where("index < ?", index).first
 
       # Lookup the previous destinations information as the departure information
-      previous_departure_time = previous_destination.departure_time
+      previous_departure_time = previous_destination.departure_time || Time.now
       previous_coordinates = [previous_destination.latitude, previous_destination.longitude]
 
     # If this is the first destination, then use the office and route start time  
@@ -68,8 +67,11 @@ class Destination < ApplicationRecord
     next_coordinates = [latitude, longitude]
 
     self.travel_time_in_minutes = CityMapper.new.travel_time(previous_departure_time, previous_coordinates, next_coordinates)
-    self.arrival_time = (travel_time_in_minutes).minutes.since(previous_departure_time)
-    self.departure_time = arrival_time + duration_in_minutes
+
+    if self.travel_time_in_minutes
+      self.arrival_time = (travel_time_in_minutes).minutes.since(previous_departure_time)
+      self.departure_time = arrival_time + duration_in_minutes
+    end
 
   end
 
