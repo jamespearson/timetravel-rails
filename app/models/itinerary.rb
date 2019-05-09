@@ -8,13 +8,21 @@ class Itinerary < ApplicationRecord
 
     validate :validate_start_at
     
-
     after_initialize :set_defaults
+
+    after_save :update_destinations, if:  Proc.new { has_start_at_changed? },
 
     # TODO: Should require at least 1 destination
     
     def end_at
         self.destinations.maximum(:departure_time)
+    end
+
+    def update_destinations
+        self.destinations.order(:index).each do |destination|
+            destination.set_times
+            destination.save
+        end
     end
 
     private 
