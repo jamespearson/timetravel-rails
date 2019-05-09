@@ -10,7 +10,7 @@ class CityMapper
             endcoord: destination_coordinates.join(","),
             time: start_at.iso8601,
             time_type: "arrival",
-            key: "6f70085ba38213beb4d4223f0119acca"
+            key: ENV["CITYMAPPER_API_KEY"]
              
       }.stringify_keys
 
