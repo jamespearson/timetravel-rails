@@ -1,5 +1,6 @@
-<ul>
-    <%=render partial: "itinerary_list_item", collection: @itineraries %>
-</ul>
-
-<%=link_to "Add Itinerary", new_itinerary_path%>
+<% if @itineraries.present? %>
+    <h2>Itineraries (<%=link_to "New", new_itinerary_path%>)</h2>
+    <ul class="itineraries-list">
+        <%=render partial: "itinerary_list_item", collection: @itineraries %>
+    </ul>
+<% end %>

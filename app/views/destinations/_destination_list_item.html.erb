@@ -1,6 +1,25 @@
 <li>
-<strong><%=destination_list_item.travel_time_in_minutes%></strong>
-    <h4><%=destination_list_item.arrival_time%></h4>
-    <%=destination_list_item.index%> -  <%=destination_list_item.address%>
-    <h4><%=destination_list_item.departure_time%></h4>
+    <% if destination_list_item.travel_time_in_minutes.present? &&  destination_list_item.travel_time_in_minutes > 0 %>
+        <div class="travel-time">
+            <p>
+                <strong><%=destination_list_item.travel_time_in_minutes%></strong> minutes
+            </p>
+        </div>
+    <% end %>
+    
+    <div class="arrival">
+        <p>Arrive at: <span><%=destination_list_item.arrival_time.to_formatted_s(:time) %></span></p>
+    </div>
+
+    <div class="info">
+            <h3><%=destination_list_item.address_line_1%></h3>
+            <%=destination_list_item.address_line_2%><br/>
+            <%=destination_list_item.city%><br/>
+            <%=destination_list_item.post_code%>
+    </div>
+
+    <div class="arrival">
+        <p>Depart at: <span><%=destination_list_item.departure_time.to_formatted_s(:time) %></span></p>
+    </div>
+    
 </li>

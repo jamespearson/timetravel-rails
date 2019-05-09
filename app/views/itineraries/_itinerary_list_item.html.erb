@@ -1,8 +1,17 @@
 <li>
-    <h3><%=itinerary_list_item.id%> - <%=itinerary_list_item.agent_name%></h3>
-    <p><%=itinerary_list_item.start_at%> to <%=itinerary_list_item.end_at%></p>
-    <p><%=itinerary_list_item.destinations.count%> destinations</p>
+    <div class="itinerary_list_item">
+        <div class="index">#<%=itinerary_list_item.id%></div>
+        <div class="info">
+            <h3><%=itinerary_list_item.agent_name%></h3>
+            <p>
+                Start: <%=itinerary_list_item.start_at.to_formatted_s(:long_ordinal)%> <br/>
+                End: <%=itinerary_list_item.end_at.to_formatted_s(:long_ordinal)%></p>
+            <p><%=itinerary_list_item.destinations.count%> destinations</p>
+        </div>
+        <div class="actions">
+            <%=link_to "Edit", new_itinerary_destination_path(itinerary_list_item) %><br/>
+            <%=link_to "Delete", itinerary_path(itinerary_list_item), method: 'delete' %> 
+        </div>
 
-    <%=link_to "Edit", new_itinerary_destination_path(itinerary_list_item) %>
-    <%=link_to "Delete", itinerary_path(itinerary_list_item), method: 'delete'  %> 
+    </div>
 </li>
