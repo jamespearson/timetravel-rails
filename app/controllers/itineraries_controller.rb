@@ -19,6 +19,13 @@ class ItinerariesController < ApplicationController
     end
   end
 
+  def update
+    @itinerary = Itinerary.find(params[:id])
+    @itinerary.update(itinerary_params)
+    redirect_to new_itinerary_destination_path(@itinerary)
+  end
+
+
   def destroy
     @itinerary = Itinerary.find(params[:id])
 

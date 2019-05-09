@@ -31,9 +31,8 @@ class DestinationsController < ApplicationController
 
   def update
     @destination = @itinerary.destinations.find(params[:id])
-    if @destination.update(visit_params)
-      redirect_to new_itinerary_destination_path(@itinerary)
-    end
+    @destination.update(destination_params)
+    redirect_to new_itinerary_destination_path(@itinerary)
   end
 
   def destroy
