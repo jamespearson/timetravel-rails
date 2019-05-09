@@ -32,7 +32,7 @@ class Destination < ApplicationRecord
   validates :post_code, presence: true
 
   validate :validate_is_in_london?
-  
+
   # Geocode the address, unless the lat / lng has already changed
   before_validation :geocode, if:  Proc.new { has_address_changed? },
                               unless: Proc.new {  have_coordinates_changed? }
@@ -44,8 +44,6 @@ class Destination < ApplicationRecord
 
   before_save :set_times
 
-  after_destroy :update_itinerary
-
   def address
       [address_line_1, address_line_2, city, post_code].compact.join(', ')
   end
@@ -53,6 +51,7 @@ class Destination < ApplicationRecord
   
 
   def set_times
+    
     return unless itinerary.present?
     
     # If we have a destation before this one..
@@ -100,15 +99,6 @@ class Destination < ApplicationRecord
     changes_to_save.include?("longitude") 
   end
 
-  def update_itinerary
-    itinerary = Itinerary.find(itinerary_id)
-    other_destinations = itinerary.destinations.where("index > ?", index).order(:index)
-
-    other_destinations.each do |od|
-      od.set_times
-      od.save
-    end
-    
-  end
+  
 
 end
