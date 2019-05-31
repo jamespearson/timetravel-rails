@@ -11,7 +11,7 @@ This app using Rails 5.2.3 and ruby 2.6.2
         bundle install
         bundle exec rails db:setup
         bundle exec rails db:migrate
-        bundle exect rails s
+        bundle exec rails s
     ```
 4. The app should now be running on http://localhost:3000
 
