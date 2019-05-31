@@ -10,7 +10,7 @@ class Itinerary < ApplicationRecord
     
     after_initialize :set_defaults
 
-    after_save :update_destinations, if:  Proc.new { has_start_at_changed? },
+    after_save :update_destinations, if:  Proc.new { has_start_at_changed? }
 
     # TODO: Should require at least 1 destination
     
