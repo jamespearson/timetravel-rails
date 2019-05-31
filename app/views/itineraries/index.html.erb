@@ -1,6 +1,10 @@
-<% if @itineraries.present? %>
-    <h2>Itineraries (<%=link_to "New", new_itinerary_path%>)</h2>
-    <ul class="itineraries-list">
+<h2>Itineraries (<%=link_to "New", new_itinerary_path%>)</h2>
+
+    
+<ul class="itineraries-list">
+    <% if @itineraries.present? %>
         <%=render partial: "itinerary_list_item", collection: @itineraries %>
-    </ul>
-<% end %>
+    <% else %>
+        <li>No itineraries found</li>
+    <% end %>    
+</ul>
